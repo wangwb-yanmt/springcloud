@@ -1,0 +1,35 @@
+server:
+  port: 9400
+
+spring:
+  application:
+    name: springcloud-config-server     #应用名
+  profiles:
+    active:
+    - native    #配置使用本地储存  
+  cloud:
+    config:
+      server:
+        native:
+          search-locations:
+          - classpath:properties/     #搜索src/main/resource 下的properties文件夹下的文件
+          
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9100/eureka/    #服务注册中心URL
+  instance:
+    instance-id: 配置中心：${server.port}
+    prefer-ip-address: true   
+    
+    
+management:  
+  endpoints:  
+    web:  
+      exposure:  
+        include: "*"  
+  endpoint:  
+    health:  
+      show-details: ALWAYS           
+          
+  

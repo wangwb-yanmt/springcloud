@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: springcloud-register
+
+server:
+  port: 9100
+  
+eureka:
+  client:
+    register-with-eureka: false   #不注册自己
+    fetch-registry: false         #无需拉取注册信息
+    service-url:
+      defaultZone: http://localhost:9100/eureka/
+  server:
+    enable-self-preservation: false   #关闭自我保护模式
+    
+    
+  

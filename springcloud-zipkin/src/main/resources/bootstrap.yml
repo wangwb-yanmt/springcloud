@@ -1,0 +1,29 @@
+#去配置中心寻找本应用的配置
+spring:
+  cloud:
+    config:
+      name: service1
+      profile: dev
+      uri: http://localhost:8888  #配置中心默认地址
+      discovery:
+        service-id: springcloud-config-server
+        enabled: true
+
+#注册到eureka发现服务
+eureka:
+  client:
+    service-url:
+      defaultZone: http://10.66.1.74:9100/eureka/     #注册中心URL
+  instance:
+    instance-id: 服务一
+    prefer-ip-address: true
+    
+management:  
+  endpoints:  
+    web:  
+      exposure:  
+        include: "*"  
+  endpoint:  
+    health:  
+      show-details: ALWAYS    
+    

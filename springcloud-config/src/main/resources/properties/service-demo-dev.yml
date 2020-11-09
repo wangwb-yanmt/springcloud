@@ -1,0 +1,31 @@
+#service-demo开发环境配置信息
+server:
+  port: 10001
+  address: 10.66.1.74
+  
+spring:
+  application:
+    name: springcloud-service-demo
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@192.168.1.142:1521:GS11
+    username: QX_SHY_DESIGN
+    password: QX_SHY_DESIGN
+    dbcp2:
+      max-idle: 10
+      min-idle: 5
+    type: com.alibaba.druid.pool.DruidDataSource  
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 200  
+    
+management:  
+  endpoints:  
+    web:  
+      exposure:  
+        include: "*"  
+  endpoint:  
+    health:  
+      show-details: ALWAYS
+      

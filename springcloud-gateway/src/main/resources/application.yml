@@ -1,0 +1,73 @@
+server:
+  port: 9200
+  
+eureka: #服务注册
+  instance:
+    instance-id: 服务网关：${server.port}
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:9100/eureka/
+
+spring:
+  application:
+    name: springcloud-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true       #开启服务发现，默认会根据大写的已注册到EUREKA的服务名路由
+          lower-case-service-id: true   #这里开启服务名小写
+      routes: #也可以自定义路由
+      - id: 公示系统
+        uri: http://localhost:8080/ecipplatform/
+        predicates:
+        - Path=/ecipplatform/**
+        filters:
+        - name: Hystrix   #熔断器
+          args:
+            name: fallbackcmd
+            fallbackUri: forward:/fallback
+      globalcors: #gateway全局跨域
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+            - GET
+            - POST
+            allowedHeaders: "*"
+      default-filters:
+      - PreserveHostHeader
+  redis:  #redis配置
+    host: 10.66.1.74
+    port: 6379
+    database: 0
+    jedis:
+      pool:
+        max-active: 8   #最大连接数
+        max-wait: -1s    #最大阻塞等待时间(负数表示没限制)
+        max-idle: 8     #最大空闲
+        min-idle: 0     #最小空闲
+    timeout: 10s
+    
+#admin配置
+management:  
+  endpoints:  
+    web:  
+      exposure:  
+        include: "*"  
+  endpoint:  
+    health:  
+      show-details: ALWAYS
+
+
+######################################################  其他    ###########################################
+jwt: 
+  secret: springcloud   #解析token的密钥，给TokenFilter使用
+  passUrls: /LoginController, /InitAuthController.do, /loginModule,/WebSocketServer   #不需要验证token的url
+  
+  
+  
+  
+  
+      

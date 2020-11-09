@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: springcloud-admin-server
+
+server:
+  port: 9300
+
+#注册到eureka发现服务
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9100/eureka/
+  instance:
+    instance-id: 服务监控：${server.port}
+    prefer-ip-address: true
+    
+#admin配置    
+management:  
+  endpoints:  
+    web:  
+      exposure:  
+        include: "*"  
+  endpoint:  
+    health:  
+      show-details: ALWAYS
